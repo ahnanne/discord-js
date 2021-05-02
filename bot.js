@@ -51,7 +51,7 @@ client.on('message', msg => { // client에 message 이벤트가 발생할 경우
       // embed를 답변 내용으로서 전달하도록 합니다.
   }
 
-  if (command = 'webhook') {
+  if (command === 'webhook') {
     const hook = new Discord.WebhookClient(
       process.env.WEBHOOK_ID,
       process.env.WEBHOOK_TOKEN
