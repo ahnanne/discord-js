@@ -77,7 +77,8 @@ client.on('message', msg => { // client에 message 이벤트가 발생할 경우
           .then(member => {
             msg.reply(`성공적으로 ${member.user.tag}님을 추방하였습니다.`);
             // 채팅 친 곳에 해당 유저의 추방 내용 알리기
-          });
+          })
+          .catch(console.error);
       } else { // member가 없다면,
         msg.reply('이 서버에 존재하지 않는 유저입니다.');
       }
@@ -97,7 +98,8 @@ client.on('message', msg => { // client에 message 이벤트가 발생할 경우
           .then(member => {
             msg.reply(`성공적으로 ${member.user.tag}님을 차단하였습니다.`)
             // 채팅 친 곳에 해당 유저의 차단 내용 알리기
-          });
+          })
+          .catch(console.error);
       } else { // member가 없다면,
         msg.reply('이 서버에 존재하지 않는 유저입니다.');
       }
@@ -112,7 +114,8 @@ client.on('message', msg => { // client에 message 이벤트가 발생할 경우
     if (args[0] > 100) return msg.reply('메시지를 지울 값은 100보다 작아야 합니다.');
 
     msg.channel.bulkDelete(args[0])
-      .then(msg.reply(`${args[0]}만큼의 메시지를 성공적으로 삭제했습니다.`));
+      .then(msg.reply(`${args[0]}만큼의 메시지를 성공적으로 삭제했습니다.`))
+      .catch(console.error);
   }
 });
 
