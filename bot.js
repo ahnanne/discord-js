@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
+// https://discord.js.org/#/docs/main/stable/class/Client
 const fs = require('fs'); // 커맨드 핸들러를 만들기 위해 fs 모듈 사용
 const config = require('./config.json');
 
@@ -14,6 +15,7 @@ client.on('ready', () => {
 client.commands = new Discord.Collection();
 // 명령어 캐시 컬렉션을 클라이언트 내에 선언합니다.
 client.aliases = new Discord.Collection();
+client.category = ['bot', 'moderator'];
 
 /**
  * fs 모듈을 이용하여 ./Commands/ 폴더 안에 있는 내용을 불러와서 작업하기
@@ -33,7 +35,7 @@ fs.readdirSync('./Commands/').forEach(dir => {
 
   console.log(Filter);
   /**
-   * [ 'embed.js', 'pong.js', 'webhook.js' ]
+   * [ 'embed.js', 'help.js', 'pong.js', 'team.js', 'webhook.js' ]
    * [ 'ban.js', 'clean.js', 'kick.js' ]
    */
 
