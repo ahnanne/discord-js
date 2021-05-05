@@ -6,11 +6,11 @@ exports.run = async (client, msg, args, prefix) => {
     if (!client.commands.get(args[0]) && !client.aliases.get(args[0])) {
       return msg.reply(`${args[0]}에 대한 정보를 찾을 수 없습니다.`);
     }
-  
+  console.log(client.commands);
     const command = client.commands.get(args[0])
       ? client.commands.get(args[0]) // 명령어를 입력한 경우
       : client.commands.get(client.aliases.get(args[0])); // 명령어의 별명을 입력한 경우
-  
+
     const config = command.config;
     const name = config.name;
     const aliases = config.aliases;
@@ -21,11 +21,11 @@ exports.run = async (client, msg, args, prefix) => {
     const Command = new Discord.MessageEmbed()
       .setTitle(`${name} 명령어`)
       .setColor('#0ea085')
-      .setDescription(`\`\`\`fix\n사용법: ${use}\`\`\``)
+      .setDescription(`\`\`\`\n사용법: ${use}\`\`\``)
       .addField('명령어 설명', `**${description}**`, false)
       .addField('카테고리', `**${category}**`, true)
       .addField('명령어의 별명', `**${aliases}**`, true);
-  
+
     msg.reply(Command);
     return;
   }
@@ -34,7 +34,7 @@ exports.run = async (client, msg, args, prefix) => {
   const categorys = client.category;
   // bot.js의 client.category를 categorys로 선언했습니다.
 
-  let Commands = new Discord.MessageEmbed() // 메시지에 embed를 나타낸다고 합니다.
+  const Commands = new Discord.MessageEmbed() // 메시지에 embed를 나타낸다고 합니다.
     .setAuthor(client.user.username + '봇 명령어', client.user.displayAvatarURL())
     .setColor('#0ea085')
     .setFooter(`${prefix}도움 <명령어>를 입력하여 해당 명령어를 자세히 확인해보세요.`);
