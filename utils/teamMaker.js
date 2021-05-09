@@ -4,7 +4,7 @@
  * @returns 팀 구성 결과를 배열로 반환
  */
 
-function makeTeam(members = [], number = 1) {
+module.exports = function makeTeam(members = [], number = 1) {
 
   // 각 멤버에게 임의의 key 값을 부여
   const generateRandomKey = () => Math.floor(Math.random() * 1000);
@@ -36,8 +36,6 @@ function makeTeam(members = [], number = 1) {
 }
 
 /* -------------------------------- test case ------------------------------- */
-console.log(makeTeam(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], 3));
-
 /**
 [
   [ { name: 'g' }, { name: 'h' }, { name: 'b' } ], // 1팀
