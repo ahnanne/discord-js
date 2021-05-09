@@ -44,13 +44,13 @@ exports.run = async (client, msg, args, prefix) => {
 
   const teamArray = makeTeam(membersArray, 3);
 
-  const testArray = teamArray.map((team, idx) => {
+  const result = teamArray.map((team, idx) => {
     const nameArray = team.map(member => member.name);
 
     return `${idx + 1}팀: ${nameArray.join(', ')}`;
   });
 
-  await msg.channel.send(testArray.join('\n'));
+  await msg.channel.send(result.join('\n'));
   // console.log(testArray.join('\n'));
 };
 
