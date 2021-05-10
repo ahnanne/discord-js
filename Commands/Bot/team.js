@@ -1,14 +1,28 @@
 const makeTeam = require('../../utils/teamMaker');
 
 exports.run = async (client, msg, args, prefix) => {
+  if (!args[0]) {
+    await msg.reply(
+      '한 팀당 인원 수를 함께 적어주세요. \n```\n!팀짜기 <한 팀당 인원 수>\n\n(ex: !팀짜기 3)```'
+    );
+
+    return;
+  }
+
+  if (Object.is(+args[0], NaN) || Math.floor(+args[0]) === 0) {
+    await msg.reply(
+      '올바른 숫자를 입력해주세요. \n```\n!팀짜기 <한 팀당 인원 수>\n\n(ex: !팀짜기 3)```'
+    );
+
+    return;
+  }
+
   const channel = client.channels.cache.get('592315290264797198');
   // 대상 음성 채널의 id를 인자로 전달
   let membersArray = [];
 
   for (let member of channel.members) {
     membersArray.push('<@' + member[1].user.id + '>'); // 봇이 해당 사용자를 맨션하도록
-
-    // await msg.channel.send('<@' + member[1].user.id + '>');
   }
 
   // utils/teamMaker.js 테스트를 위한 mock data
@@ -42,7 +56,7 @@ exports.run = async (client, msg, args, prefix) => {
     '<@517805308513615900>',
   ];
 
-  const teamArray = makeTeam(membersArray, 3);
+  const teamArray = makeTeam(membersArray, +args[0]);
 
   const result = teamArray.map((team, idx) => {
     const nameArray = team.map(member => member.name);
@@ -59,5 +73,5 @@ exports.config = {
   aliases: ['team', '팀'],
   category: ['bot'],
   des: ['랜덤으로 팀을 정합니다.'],
-  use: ['!팀짜기']
+  use: ['!팀짜기 <한 팀당 인원 수>']
 };
