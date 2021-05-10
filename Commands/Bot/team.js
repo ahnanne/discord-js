@@ -1,4 +1,3 @@
-const Discord = require('discord.js');
 const makeTeam = require('../../utils/teamMaker');
 
 /* ---------------------------- random team maker --------------------------- */
@@ -66,11 +65,7 @@ exports.run = async (client, msg, args, prefix) => {
 
   const teamArray = makeTeam(membersArray, +args[0]);
 
-  const result = teamArray.map((team, idx) => {
-    const nameArray = team.map(member => member.name);
-
-    return `${idx + 1}팀: ${nameArray.join(', ')}`;
-  });
+  const result = teamArray.map((team, idx) => `${idx + 1}팀: ${team.join(', ')}`);
 
   await msg.channel.send(result.join('\n'));
 };

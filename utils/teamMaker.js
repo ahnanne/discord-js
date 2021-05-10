@@ -20,13 +20,13 @@ module.exports = function makeTeam(members = [], number = 1) {
   });
 
   // 정렬 결과에서 임의로 부여했던 key 프로퍼티를 제거
-  sortResult.forEach(res => delete res.key);
+  const membersWithoutKey = sortResult.map(res => res.name);
 
   // number parameter로 전달했던 팀원 수에 맞게 팀 나누기
   const teamResult = [];
 
   for (let i = 0; i < members.length; i++) {
-    const piece = [...sortResult].slice(i, i + number);
+    const piece = [...membersWithoutKey].slice(i, i + number);
     teamResult.push(piece);
 
     i += number - 1;
@@ -36,10 +36,11 @@ module.exports = function makeTeam(members = [], number = 1) {
 }
 
 /* -------------------------------- test case ------------------------------- */
+// console.log(makeTeam(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'], 3));
 /**
 [
-  [ { name: 'g' }, { name: 'h' }, { name: 'b' } ], // 1팀
-  [ { name: 'd' }, { name: 'c' }, { name: 'e' } ], // 2팀
-  [ { name: 'f' }, { name: 'a' } ] // 3팀
+  [ 'h', 'f', 'g' ], // 1팀
+  [ 'a', 'd', 'e' ], // 2팀
+  [ 'c', 'b' ] // 3팀
 ]
  */
