@@ -1,5 +1,7 @@
+const Discord = require('discord.js');
 const makeTeam = require('../../utils/teamMaker');
 
+/* ---------------------------- random team maker --------------------------- */
 exports.run = async (client, msg, args, prefix) => {
   if (!args[0]) {
     await msg.reply(
@@ -17,8 +19,29 @@ exports.run = async (client, msg, args, prefix) => {
     return;
   }
 
-  const channel = client.channels.cache.get('592315290264797198');
+  // Map.prototype.forEach 메서드를 이용하여 현재 길드의 채널을 순회하며,
+  // 메시지 작성자가 속해있는 음성채널 찾기
+  let voiceChId = '';
+  msg.guild.channels.cache.forEach((ch, chId) => {
+    if (ch.type !== 'voice') return;
+
+    for (let [ memberId ] of ch.members) {
+      if (memberId === msg.author.id) voiceChId = chId;
+      return;
+    }
+  });
+
+  const channel = client.channels.cache.get(voiceChId);
   // 대상 음성 채널의 id를 인자로 전달
+
+  if (!channel) { // 메시지 작성자가 음성 채널에 들어가지 않은 채 명령어를 입력했을 경우
+    await msg.reply(
+      '음성 채널에 입장하신 뒤 팀짜기 명령어를 입력해주세요.'
+    );
+
+    return;
+  }
+
   let membersArray = [];
 
   for (let member of channel.members) {
@@ -41,21 +64,6 @@ exports.run = async (client, msg, args, prefix) => {
   //   '<@517805308513615900>' + 11,
   // ];
 
-  membersArray = [
-    '<@517805308513615900>',
-    '<@517805308513615900>',
-    '<@517805308513615900>',
-    '<@517805308513615900>',
-    '<@517805308513615900>',
-    '<@517805308513615900>',
-    '<@517805308513615900>',
-    '<@517805308513615900>',
-    '<@517805308513615900>',
-    '<@517805308513615900>',
-    '<@517805308513615900>',
-    '<@517805308513615900>',
-  ];
-
   const teamArray = makeTeam(membersArray, +args[0]);
 
   const result = teamArray.map((team, idx) => {
@@ -65,13 +73,12 @@ exports.run = async (client, msg, args, prefix) => {
   });
 
   await msg.channel.send(result.join('\n'));
-  // console.log(testArray.join('\n'));
 };
 
 exports.config = {
   name: '팀짜기',
   aliases: ['team', '팀'],
   category: ['bot'],
-  des: ['랜덤으로 팀을 정합니다.'],
+  des: ['사용자와 같은 음성 채널에 있는 멤버들을 대상으로 랜덤으로 팀을 정합니다.'],
   use: ['!팀짜기 <한 팀당 인원 수>']
 };
