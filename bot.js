@@ -77,6 +77,8 @@ function runCommand(command, message, args, prefix) {
 }
 
 client.on('message', async msg => {
+  if (msg.author.bot) return;
+
   const prefix = '!';
 
   if (!msg.content.startsWith(prefix)) return;

@@ -6,7 +6,7 @@ exports.run = async (client, msg, args, prefix) => {
     if (!client.commands.get(args[0]) && !client.aliases.get(args[0])) {
       return msg.reply(`${args[0]}에 대한 정보를 찾을 수 없습니다.`);
     }
-  console.log(client.commands);
+
     const command = client.commands.get(args[0])
       ? client.commands.get(args[0]) // 명령어를 입력한 경우
       : client.commands.get(client.aliases.get(args[0])); // 명령어의 별명을 입력한 경우
