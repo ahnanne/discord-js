@@ -97,5 +97,4 @@ client.on('message', async msg => {
   }
 });
 
-client.login(process.env.TOKEN);
-// Heroku 배포를 위한 인자 전달
+client.login(process.env.BOT_TOKEN);
