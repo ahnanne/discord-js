@@ -97,5 +97,5 @@ client.on('message', async msg => {
   }
 });
 
-client.login(config.token);
-// config.json 파일에 저장해 둔 token 값 불러오기
+client.login(process.env.TOKEN);
+// Heroku 배포를 위한 인자 전달
