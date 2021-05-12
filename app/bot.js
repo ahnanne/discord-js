@@ -24,9 +24,9 @@ client.category = ['bot', 'moderator'];
  * (즉, 이름 그대로 작업을 동기적으로 처리함.)
  * (참고: https://nodejs.org/api/fs.html#fs_fs_readdirsync_path_options)
  */
-fs.readdirSync('./Commands/').forEach(dir => {
+fs.readdirSync('../Commands/').forEach(dir => {
   // Filter라는 변수를 선언하고, Commands 폴더 내의 .js로 끝나는 파일들만 필터링한 배열을 할당합니다.
-  const Filter = fs.readdirSync(`./Commands/${dir}`).filter(f => f.endsWith('.js'));
+  const Filter = fs.readdirSync(`../Commands/${dir}`).filter(f => f.endsWith('.js'));
   /**
    * String.prototype.endsWith()
    * 어떤 문자열이 특정 문자열로 끝나는지를 확인한 뒤 boolean 값을 반환합니다.
@@ -39,7 +39,7 @@ fs.readdirSync('./Commands/').forEach(dir => {
    */
 
   Filter.forEach(file => {
-    const cmd = require(`./Commands/${dir}/${file}`);
+    const cmd = require(`../Commands/${dir}/${file}`);
 
     client.commands.set(cmd.config.name, cmd);
     /**
