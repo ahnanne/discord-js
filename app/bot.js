@@ -2,7 +2,6 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 // https://discord.js.org/#/docs/main/stable/class/Client
 const fs = require('fs'); // 커맨드 핸들러를 만들기 위해 fs 모듈 사용
-const config = require('./config.json');
 
 client.on('ready', () => {
   console.log(`${client.user.tag} 봇에 로그인했습니다.`);
