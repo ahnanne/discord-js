@@ -40,7 +40,7 @@ fs.readdirSync('Commands/').forEach(dir => {
    */
 
   Filter.forEach(file => {
-    const cmd = require(`../Commands/${dir}/${file}`);
+    const cmd = require(`./Commands/${dir}/${file}`);
 
     client.commands.set(cmd.config.name, cmd);
     /**
