@@ -11,13 +11,14 @@
     "url": "git+https://github.com/ahnanne/discord-js.git"
   },
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/ahnanne/discord-js/issues"
   },
   "homepage": "https://github.com/ahnanne/discord-js#readme",
   "dependencies": {
     "discord.js": "^12.5.3",
-    "dotenv": "^8.2.0"
+    "dotenv": "^8.2.0",
+    "heroku": "^7.53.1"
   }
 }

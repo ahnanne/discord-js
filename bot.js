@@ -2,7 +2,7 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 // https://discord.js.org/#/docs/main/stable/class/Client
 const fs = require('fs'); // 커맨드 핸들러를 만들기 위해 fs 모듈 사용
-const config = require('./config.json');
+require('dotenv').config();
 
 client.on('ready', () => {
   console.log(`${client.user.tag} 봇에 로그인했습니다.`);
@@ -25,9 +25,9 @@ client.category = ['bot', 'moderator'];
  * (즉, 이름 그대로 작업을 동기적으로 처리함.)
  * (참고: https://nodejs.org/api/fs.html#fs_fs_readdirsync_path_options)
  */
-fs.readdirSync('./Commands/').forEach(dir => {
+fs.readdirSync('Commands/').forEach(dir => {
   // Filter라는 변수를 선언하고, Commands 폴더 내의 .js로 끝나는 파일들만 필터링한 배열을 할당합니다.
-  const Filter = fs.readdirSync(`./Commands/${dir}`).filter(f => f.endsWith('.js'));
+  const Filter = fs.readdirSync(`Commands/${dir}`).filter(f => f.endsWith('.js'));
   /**
    * String.prototype.endsWith()
    * 어떤 문자열이 특정 문자열로 끝나는지를 확인한 뒤 boolean 값을 반환합니다.
@@ -97,5 +97,4 @@ client.on('message', async msg => {
   }
 });
 
-client.login(config.token);
-// config.json 파일에 저장해 둔 token 값 불러오기
+client.login(process.env.BOT_TOKEN);
