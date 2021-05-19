@@ -62,7 +62,7 @@ exports.run = async (client, msg, args, prefix) => {
     //   '<@517805308513615900>' + 11,
     // ];
   
-    const teamArray = makeTeam(membersArray, +args[0]);
+    const teamArray = makeTeam(membersArray, Math.floor(+args[0]));
   
     const result = teamArray.map((team, idx) => `${idx + 1}팀: ${team.join(', ')}`);
   
