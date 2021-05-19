@@ -17,55 +17,59 @@ exports.run = async (client, msg, args, prefix) => {
   const channel = client.channels.cache.get(voiceChId);
   // 대상 음성 채널의 id를 인자로 전달
 
-  if (!channel) { // 메시지 작성자가 음성 채널에 들어가지 않은 채 명령어를 입력했을 경우
-    return await msg.reply(
-      '음성 채널에 입장하신 뒤 팀짜기 명령어를 입력해주세요.'
-    );
+  try {
+    if (!channel) { // 메시지 작성자가 음성 채널에 들어가지 않은 채 명령어를 입력했을 경우
+      return await msg.reply(
+        '음성 채널에 입장하신 뒤 팀짜기 명령어를 입력해주세요.'
+      );
+    }
+  
+    if (!args[0]) {
+      await msg.reply(
+        '한 팀당 인원 수를 함께 적어주세요. \n```\n!팀짜기 <한 팀당 인원 수>\n\n(ex: !팀짜기 3)```'
+      );
+  
+      return;
+    }
+  
+    if (Object.is(+args[0], NaN) || Math.floor(+args[0]) === 0) {
+      await msg.reply(
+        '올바른 숫자를 입력해주세요. \n```\n!팀짜기 <한 팀당 인원 수>\n\n(ex: !팀짜기 3)```'
+      );
+  
+      return;
+    }
+  
+    let membersArray = [];
+  
+    for (let member of channel.members) {
+      membersArray.push('<@' + member[1].user.id + '>'); // 봇이 해당 사용자를 맨션하도록
+    }
+  
+    // utils/teamMaker.js 테스트를 위한 mock data
+    membersArray = [
+      '<@517805308513615900>' + 0,
+      '<@517805308513615900>' + 1,
+      '<@517805308513615900>' + 2,
+      '<@517805308513615900>' + 3,
+      '<@517805308513615900>' + 4,
+      '<@517805308513615900>' + 5,
+      '<@517805308513615900>' + 6,
+      '<@517805308513615900>' + 7,
+      '<@517805308513615900>' + 8,
+      '<@517805308513615900>' + 9,
+      '<@517805308513615900>' + 10,
+      '<@517805308513615900>' + 11,
+    ];
+  
+    const teamArray = makeTeam(membersArray, +args[0]);
+  
+    const result = teamArray.map((team, idx) => `${idx + 1}팀: ${team.join(', ')}`);
+  
+    await msg.channel.send(result.join('\n'));
+  } catch (err) { // 명령어 실행 도중 에러가 발생할 경우 에러 메시지 출력
+    console.error(err);
   }
-
-  if (!args[0]) {
-    await msg.reply(
-      '한 팀당 인원 수를 함께 적어주세요. \n```\n!팀짜기 <한 팀당 인원 수>\n\n(ex: !팀짜기 3)```'
-    );
-
-    return;
-  }
-
-  if (Object.is(+args[0], NaN) || Math.floor(+args[0]) === 0) {
-    await msg.reply(
-      '올바른 숫자를 입력해주세요. \n```\n!팀짜기 <한 팀당 인원 수>\n\n(ex: !팀짜기 3)```'
-    );
-
-    return;
-  }
-
-  let membersArray = [];
-
-  for (let member of channel.members) {
-    membersArray.push('<@' + member[1].user.id + '>'); // 봇이 해당 사용자를 맨션하도록
-  }
-
-  // utils/teamMaker.js 테스트를 위한 mock data
-  membersArray = [
-    '<@517805308513615900>' + 0,
-    '<@517805308513615900>' + 1,
-    '<@517805308513615900>' + 2,
-    '<@517805308513615900>' + 3,
-    '<@517805308513615900>' + 4,
-    '<@517805308513615900>' + 5,
-    '<@517805308513615900>' + 6,
-    '<@517805308513615900>' + 7,
-    '<@517805308513615900>' + 8,
-    '<@517805308513615900>' + 9,
-    '<@517805308513615900>' + 10,
-    '<@517805308513615900>' + 11,
-  ];
-
-  const teamArray = makeTeam(membersArray, +args[0]);
-
-  const result = teamArray.map((team, idx) => `${idx + 1}팀: ${team.join(', ')}`);
-
-  await msg.channel.send(result.join('\n'));
 };
 
 exports.config = {
