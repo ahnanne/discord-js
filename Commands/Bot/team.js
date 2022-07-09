@@ -9,7 +9,10 @@ exports.run = async (client, msg, args, prefix) => {
     if (ch.type !== 'voice') return;
 
     for (let [memberId] of ch.members) {
-      if (memberId === msg.author.id) voiceChId = chId;
+      if (memberId === msg.author.id) {
+        voiceChId = chId;
+        return;
+      }
     }
   });
 
