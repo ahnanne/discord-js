@@ -8,9 +8,11 @@ exports.run = async (client, msg, args, prefix) => {
   msg.guild.channels.cache.forEach((ch, chId) => {
     if (ch.type !== 'voice') return;
 
-    for (let [ memberId ] of ch.members) {
-      if (memberId === msg.author.id) voiceChId = chId;
-      return;
+    for (let [memberId] of ch.members) {
+      if (memberId === msg.author.id) {
+        voiceChId = chId;
+        return;
+      }
     }
   });
 
